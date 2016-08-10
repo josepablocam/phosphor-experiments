@@ -1,0 +1,54 @@
+These are a series of experiments to collect information on performance overhead
+for using phosphor instrumentation.
+
+Programs are crafter to have one main loop. Loops can be categorized in three groups:
+ - No taint: loops that do not propagate taint and involve no tainted variables
+ - Monotonic: loops that maintain the sources/sinks for taint constant through iterations
+ - Non-monotonic: loops that do NOT maintain source/sinks constant
+ 
+In each we experiment with the following:
+- Instrumenting explicitly (with API) calls all variables (which corresponds to the
+naive setting of creating shadow state variables for each variable in a program)
+- Instrumenting based on control flow (optimal taint approach)
+
+Note that using Phosphor imposes an overhead on all variables, not just those that
+are explicitly instrumented using the API (as per conversations with Jonathan Bell).
+Additionally, there is no current way (at least to my knowledge) to "stop" tracking a
+given variable, so once you instrument a variable, that cost is carried throughout the
+program.
+
+Given this, we also explore programs that (under optimal taint):
+ - Have require instrumentation to be inserted before the main loop vs after
+
+Finally, we also explore the same programs under two settings:
+  - Large vs small basic blocks
+  
+Instructions to run:
+# with java 1.8
+./setup.sh
+# with java 1.7
+./prep.sh
+mvn package
+./run_experiment.sh <jar> <class-name-here>
+
+If you use jenv to manage java versions (available in Mac OSX), then this can be
+done as (assuming you have the java versions available)
+jenv local 1.8
+jenv exec ./setup.sh
+jenv local 1.7
+jenv exec ./prep.sh
+mvn package
+./run_experiment.sh <jar> <class-name-here>
+
+
+
+
+
+
+
+
+
+
+
+
+  
