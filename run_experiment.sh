@@ -65,8 +65,8 @@ export JAVA_TOOL_OPTIONS="-Xbootclasspath/a:$phosphor_jar -javaagent:$phosphor_j
 if [ -z $run ]
   then
     echo "Bencharking $name"
-    java com.google.caliper.Runner $name $results $debug
+    java -Xmx4g com.google.caliper.Runner $name $results $debug
 else
     echo "Running $name"
-    java $name
+    java -Xmx4g $name
 fi
