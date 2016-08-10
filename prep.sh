@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # phosphor and caliper only seem to collaborate under java 1.7, everything else errors out
-# which is a bit since phosphor needs be built with 1.8
+# which is a bit annoying since phosphor needs be built with 1.8
 
 function instrument_jre {
   java -Xmx6g -XX:MaxPermSize=512m -jar Phosphor-0.0.2-SNAPSHOT.jar -multiTaint -forceUnboxAcmpEq -withEnumsByValue $JAVA_HOME jre-inst-obj;
