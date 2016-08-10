@@ -1,7 +1,7 @@
 These are a series of experiments to collect information on performance overhead
 for using phosphor instrumentation.
 
-Programs are crafter to have one main loop. Loops can be categorized in three groups:
+Programs are crafted to have one main loop. Loops can be categorized in three groups:
  - No taint: loops that do not propagate taint and involve no tainted variables
  - Monotonic: loops that maintain the sources/sinks for taint constant through iterations
  - Non-monotonic: loops that do NOT maintain source/sinks constant
@@ -18,10 +18,10 @@ given variable, so once you instrument a variable, that cost is carried througho
 program.
 
 Given this, we also explore programs that (under optimal taint):
- - Have require instrumentation to be inserted before the main loop vs after
+ - require instrumentation to be inserted before the main loop vs after
 
-Finally, we also explore the same programs under two settings:
-  - Large vs small basic blocks
+Finally, we plan to explore the same programs under two settings:
+  - Large vs small basic blocks (this remains to be done)
   
 Instructions to run:
 # with java 1.8
@@ -40,15 +40,7 @@ jenv exec ./prep.sh
 mvn package
 ./run_experiment.sh <jar> <class-name-here>
 
-
-
-
-
-
-
-
-
-
-
-
-  
+Finally, if you'd like to run all the experiments and generate graphs used, call
+./run_predefined.sh
+ which saves .json result files to results/ folder and runs a quick R script to
+ create graphs (this requires that you have R and the ggplot2 package installed.)
