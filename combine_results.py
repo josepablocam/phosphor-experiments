@@ -25,6 +25,7 @@ def parse_json(filepath):
     :param filepath:
     :return: dataframe of caliper results
     """
+    print "==> Parsing " + filepath
     with open(filepath) as fhandle:
         data = json.load(fhandle)
 
@@ -53,8 +54,13 @@ def main(caliper_result_files, output_path):
     :param output_path: path for combined path
     :return: void
     """
-
-    data = [parse_json(file_name) for file_name in caliper_result_files]
+    data = []
+    for file_name in caliper_result_files:
+        try:
+            data.append(parse_json(file_name))
+        except Exception:
+            print "Failed to parse: " + file_name
+            pass
     total_data = pd.concat(data, ignore_index = True)
     total_data.to_csv(output_path, mode = 'w', index = False)
 
@@ -65,7 +71,7 @@ def help_message():
 
 # parse args
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         help_message()
         sys.exit()
     else:
